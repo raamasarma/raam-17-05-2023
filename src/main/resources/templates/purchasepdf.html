@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+  <style>
+    .row {
+      height: 100%;
+      width: 100%;
+      display: inline-block;
+      vertical-align: middle;
+      align-content: space-between;
+      align-items: center;
+    }
+
+    .col {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .col-auto {
+      flex: 0 0 auto;
+      width: auto;
+      display: inline-block;
+      vertical-align: middle;
+      align-content: space-between;
+    }
+
+    table,
+    th,
+    td {
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color: lightblue;
+
+    }
+
+    @page {
+      margin: 2px
+    }
+
+    /* .col-10 {
+      width: 100%;
+    }
+    .col-9 {
+      width: 90%;
+    }
+    .col-8 {
+      width: 80%;
+    }
+    .col-7 {
+      width: 70%;
+    }
+    .col-6 {
+      width: 60%;
+    }
+    .col-5 {
+      width: 50%;
+    }
+    .col-4 {
+      width: 40%;
+    }
+    .col-3 {
+      width: 30%;
+    }
+    .col-2 {
+      width: 20%;
+    }
+    .col-1 {
+      width: 10%;
+    } */
+  </style>
+</head>
+
+<body>
+
+  <div class="row" style="text-align: center;">
+    <div class="col-auto  ">
+      <div class="row" style=" display: flex; justify-content: space-between; width: 100%;">
+        <div class="col-auto "
+          style="color: green;font-weight: 600; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          <h1><span>
+            <img src="../static/image/LS.jpeg"width="100"
+                 th:src="@{image/LS.jpeg}"/>
+          </span><centre><span th:text="${cp.orgName}"></span></centre></h1>
+        </div>
+        <div class="col-auto "
+          style="color: blue;font-weight: 600; text-align: end; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          <div class="col"><font color="red"><b>GST:<span th:text="${cp.GST}"></span> </b></font></div>
+          <div class="row">Phone: <span th:text="${cp.orgMobile}"></span><br></div>
+          <div class="row">Email: <span th:text="${cp.orgEmail}"></span></div>
+        </div>
+      </div>
+      <div class="row"
+        style="color: red; font-weight: 600; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+       <center><span th:text="${cp.orgAddress1}"></span>  <span th:text="${cp.orgAddress2}"></span>   <span th:text="${cp.orgAddress3}"></span>   <span th:text="${cp.pinCode}"></span></center>
+      </div>
+
+    </div>
+  </div>
+  <hr style="height: 3px; width: 100%; background-color: blue; border-radius: 2.5px;">
+  </hr>
+  <div class="row" style=" display: flex; justify-content: space-between; width: 100%;">
+    <div class="col-auto" style="text-align: start; ">
+      <p>PAN NO : AQXPA6394G</p>
+    </div>
+
+  </div>
+  <h3 style="text-align: center;">ORIGINAL FOR RECEPIENT</h3>
+  <h2 style="text-align: center;"> <span th:text="${po.invType}"></span><br></h2>
+  <table class="table" style="width: 100%;">
+    <tr>
+      <th>Customer Name and Billing Address</th>
+      <th style="display: flex; justify-content: space-around;"><span style="text-align: start;">INVOICE NUMBER:</span><span th:text="${invoiceNo}" id="invoiceNo"></span>
+        <span style="text-align:end; ">DATE:</span><span th:text="${po.invDate}" id="ïnvDate"></span><br>
+      </th>
+    </tr>
+    <tr>
+<!--      <td><b>Farmer Dairy Products PVT ltd </b><br></br>-->
+<!--        JangaReddy Gudem<br></br>-->
+<!--        <b>West Godavari District. </b>-->
+<!--      </td>-->
+<!--          <td ><span th:text="${name}" id="name"></span></td>-->
+          <td><b><span th:text="${sm.supplierName}"></span></b><br>
+      <span th:text="${sm.supAddress1}"></span><br>
+      <span th:text="${sm.supAddress2}"></span><br>
+      <span th:text="${sm.supAddress3}"></span></td></b>
+      </td>
+      <td>
+        <b>Shipping Address</b><br></br>
+        <b><span th:text="${sm.shipAddress1}"></span><br> </b>
+        <span th:text="${sm.shipAddress2}"></span><br>
+        <b><span th:text="${sm.shipAddress3}"></span> </b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Destination : <span th:text="${sm.supAddress2}"></span><br></br>
+        Shipping Mode : Road
+      </td>
+      <td>
+        Ref number :  <span th:text="${po.poRefNo}"></span><br></br>
+        Ref Date : <span th:text="${po.poRefDate}"></span>
+      </td>
+    </tr>
+  </table>
+  <table style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Fat</th>
+        <th>SNF</th>
+        <th>Qty</th>
+        <th>Item Rate</th>
+        <th>Item Value</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr th:each="por:${po}">
+  <td><span th:text="${por.fatP}"></span></td>
+  <td><span th:text="${por.snfP}"></span></td>
+  <td>Ltrs:<span th:text="${por.quantity}"></span></td>
+<!--  <td>Litre</td>-->
+  <td>Rs <span th:text="${por.ltrRate}"></span>/-</td>
+  <td>Rs <span th:text="${por.amt}"></span>/-</td>
+</tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7">Total</td>
+        <td><span th:text="${po.totAmtRound}"></span></td>
+      </tr>
+    </tfoot>
+  </table>
+  <table style="width: 100%;">
+    <tr>
+      <td>Bill Amount in Words INR <b>Four Lakh Ninety Nine Thousand Six Hundred and Fifty Two </b> only</td>
+      <td> <b>Sub Total</b> : Round Off <br></br>
+        <b>Bill Total : <span th:text="${po.totAmtRound}"></span></b>
+      </td>
+    </tr>
+  </table>
+  <table style="width: 100%;">
+    <tr>
+      <td> <b>
+          <h3>Bank Details : </h3>
+        </b><br></br>
+        Shipping Company : <b><span th:text="${cp.orgName}"></span></b><br></br>
+        Account Number : <b><span th:text="${cp.orgBankAcctNo}"></span><br> </b><br></br>
+        Bank Name : <b><span th:text="${cp.orgBankName}"></span> </b><br></br>
+        IFSC Code : <b><span th:text="${cp.orgBankIFSC}"></span></b><br></br>
+        Branch : <b><span th:text="${cp.orgBankBranch}"></span> <br></br></b></td>
+
+    </tr>
+  </table>
+  <table style="width: 100%;">
+    <tr>
+      <td style="border: 0px;"><b>
+          <h3>Declaration : </h3>
+        </b><br></br>We declare that this invoice shows the actual price of the goods described and that all particulars
+        are true and correct
+      </td>
+      <td style="border: 0px;"><b>For L S MILK TRADERS</b><br></br></td>
+    </tr>
+    <tr>
+      <td style="border: 0px; text-align: center;">
+        Composition taxable person, not eligible to collect tax on supplies
+      </td>
+      <td style="border: 0px; text-align: center;">
+        Authorized Signotary
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <table style="width: 100%;">
+    <tr><centre>
+      <div class="box-footer">
+        <button id="downloadPDF" class="btn btn-primary">Download PDF</button>
+      </div>
+    </centre>
+    </tr>
+  </table>
+  <div th:replace="fragments/navbar :: navbar_footer"></div>
+</body>
+<script>
+  $('#downloadPDF').click(function() {
+  alert("DownloadPDF");
+  //invoiceNo
+       var invoiceNo = $("#invoiceNo").html();
+       alert(invoiceNo);
+
+       $.ajax({
+'async': false,
+ type: 'POST',
+ url: '/pdfDownload',
+ data: {"invoiceNo":invoiceNo},
+            success: function(data) {
+alert("PDF Download");
+}
+});
+
+
+  });
+</script>
+
+</html>

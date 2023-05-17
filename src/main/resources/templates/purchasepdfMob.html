@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <style>
+    .row {
+      height: 100%;
+      width: 100%;
+      display: inline-block;
+      vertical-align: middle;
+      align-content: space-between;
+      align-items: center;
+    }
+
+    .col {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .col-auto {
+      flex: 0 0 auto;
+      width: auto;
+      display: inline-block;
+      vertical-align: middle;
+      align-content: space-between;
+    }
+
+    table,
+    th,
+    td {
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+
+    th {
+      background-color: lightblue;
+
+    }
+
+    @page {
+      margin: 2px
+    }
+
+    /* .col-10 {
+      width: 100%;
+    }
+    .col-9 {
+      width: 90%;
+    }
+    .col-8 {
+      width: 80%;
+    }
+    .col-7 {
+      width: 70%;
+    }
+    .col-6 {
+      width: 60%;
+    }
+    .col-5 {
+      width: 50%;
+    }
+    .col-4 {
+      width: 40%;
+    }
+    .col-3 {
+      width: 30%;
+    }
+    .col-2 {
+      width: 20%;
+    }
+    .col-1 {
+      width: 10%;
+    } */
+  </style>
+</head>
+
+<body>
+
+      <div class="row" style=" display: flex; justify-content: space-between; width: 100%;"th:if="${bannerPdf == 'false'}">
+        <div class="col-auto">
+          <img th:src="@{${'src/main/resources/static/image/'+logo}}" width="64" height="64"></img>
+        </div>
+        <div class="col-auto "
+          style="color: green;font-weight: 600; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          <h2 th:text="${org.orgName}"></h2>
+        </div>
+        <div class="col-auto "
+          style="color: blue;font-weight: 600; text-align: end; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          <div class="row">Phone: <span th:text="${org.orgMobile}"></span></div>
+          <div class="row">Email: <span th:text="${org.orgEmail}"></span></div>
+        </div>
+      <div class="row"
+        style="color: red; font-weight: 600; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+        <span th:text="${org.orgAddress1}"></span>
+      </div>
+
+
+    </div>
+      <div class="row" th:if="${bannerPdf == 'true'}">
+                <img th:src="@{${'src/main/resources/static/image/'+banner}}" width="100%" height="120"></img>
+      </div>
+      <div class="row" th:if="${bannerPdf == 'false'}">
+  <hr style="height: 3px; width: 100%; background-color: blue; border-radius: 2.5px;" >
+  </hr>
+      </div>
+
+  <div class="row" style=" display: flex; justify-content: space-between; width: 100%;" th:if="${bannerPdf == 'false'}">
+    <div class="col-auto" style="text-align: start; ">
+      <p>GST NO : <span th:text="${org.GST}"></span></p>
+    </div>
+
+  </div>
+  <h3 style="text-align: center;">ORIGINAL FOR RECEPIENT</h3>
+  <h2 style="text-align: center;"><span th:text="${InvType}"></span></h2>
+  <table class="table" style="width: 100%;">
+    <tr>
+      <th>Supplier Name and Billing Address</th>
+      <th style="display: flex; justify-content: space-around;"><span style="text-align: start;">INVOICE NUMBER:
+         <span th:text="${InvNum}"></span> </span>
+        <span style="text-align: end; width: 100%;">DATE:<span th:text="${InvDate}"></span></span>
+      </th>
+    </tr>
+    <tr>
+      <td><b> <span th:text="${sup.supplierName}"></span></b><br></br>
+        JangaReddy Gudem<br></br>
+        <b><span th:text="${sup.supAddress2}"></span></b>
+      </td>
+      <td>
+        <b>Shipping Address</b><br></br>
+        <b> <span th:text="${sup.supplierName}"></span></b><br></br>
+        JangaReddy Gudem<br></br>
+        <b><span th:text="${sup.shipAddress2}"></span></b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Destination : <span th:text="${sup.shipAddress2}"></span><br></br>
+        Shipping Mode : <span th:text="${Tmode}"></span>
+      </td>
+      <td>
+        Ref number : NA<br></br>
+        Ref Date : NA
+      </td>
+    </tr>
+  </table>
+  <table style="width: 100%;">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Description</th>
+        <th>Fat</th>
+        <th>SNF</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Item Rate</th>
+        <th>Item Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="order : ${orders}">
+        <td> <span th:text="${order.sno}"></span> </td>
+        <td> <span th:text="${order.milkName}"></span> <br></br>
+          Rate : <span th:text="${order.tsRate}"></span> LtrTs
+        </td>
+        <td ><span th:text="${order.fat}"></span>%</td>
+        <td><span th:text="${order.snf}"></span>%</td>
+        <td><span th:text="${order.qty}"></span></td>
+        <td><span th:text="${order.unit}"></span></td>
+        <td><span th:text="${order.ltrRate}"></span></td>
+        <td ><span th:text="${order.amt}"></span></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="7">Total</td>
+        <td><span th:text="${ttlamt}"></span></td>
+      </tr>
+    </tfoot>
+  </table>
+  <table style="width: 100%;">
+    <tr>
+      <td>Bill Amount in Words INR <b><span th:text="${words}"></span> </b> only</td>
+      <td> <b>Sub Total</b> : Round Off <br></br>
+        <b>Bill Total : <span th:text="${ttlamt}"></span></b>
+      </td>
+    </tr>
+  </table>
+  <table style="width: 100%;" th:if="${InvType == 'Tax(Sale)Invoice'}">
+    <tr>
+      <td> <b>
+          <h3>Bank Details : </h3>
+        </b><br></br>
+        Shipping Company : <b><span th:text="${org.orgName}"></span> </b><br></br>
+        Account Number : <b><span th:text="${org.orgBankAcctNo}"></span> </b><br></br>
+        Bank Name : <b><span th:text="${org.orgBankName}"></span></b><br></br>
+        IFSC Code : <b><span th:text="${org.orgBankIFSC}"></span> </b><br></br>
+        Branch : <b><span th:text="${org.orgBankBranch}"></span><br></br></b></td>
+
+    </tr>
+  </table>
+  <table style="width: 100%;">
+    <tr>
+      <td style="border: 0px;"><b>
+          <h3>Declaration : </h3>
+        </b><br></br>We declare that this invoice shows the actual price of the goods described and that all particulars
+        are true and correct
+      </td>
+      <td style="border: 0px; width: 30%;"><b>For </b><br></br> <b th:text="${org.orgName}"></b></td>
+    </tr>
+    <tr>
+      <td style="border: 0px; text-align: center;">
+        Composition taxable person, not eligible to collect tax on supplies
+      </td>
+      <td style="border: 0px; text-align: center;width: 30%;">
+        Authorized Signotary
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</body>
+
+</html>
